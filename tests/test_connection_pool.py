@@ -13,6 +13,10 @@ async def test_measure_elapsed_time_per_step_with_connection_pool(test_engine):
     왜 커넥션 풀이 필요할까요?
 
     => 커넥션을 맺는 과정은 생각보다 비쌉니다.
+    - TCP/IP 연결을 맺는 과정
+    - 인증 과정
+    - 세션 설정 (ex. timezone 설정, character set 설정, resource 할당 등)
+    - 데이터베이스 정보 조회 (ex. 데이터베이스 버전 조회)
 
     => `select 1` 쿼리를 날리는 동작에서 각 단계 별로 걸리는 시간을 측정해보면,
     select 1 쿼리를 날리고 응답을 받는 시간보다, 커넥션을 맺는 시간이 더 오래 걸립니다.
