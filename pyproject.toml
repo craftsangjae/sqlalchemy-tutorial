@@ -23,3 +23,5 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 minversion = "6.0"
 asyncio_mode = "auto"
+log_cli = true
+log_cli_level = "DEBUG"
