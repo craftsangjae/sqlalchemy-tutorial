@@ -1,0 +1,12 @@
+version: '3.7'  # 사용할 Compose 파일 버전
+
+services:
+  db:
+    image: postgres:latest  # 사용할 PostgreSQL 이미지 버전
+    restart: always
+    environment:
+      POSTGRES_DB: testdb       # 데이터베이스 이름
+      POSTGRES_USER: user       # 데이터베이스 유저 이름
+      POSTGRES_PASSWORD: password  # 데이터베이스 유저 비밀번호
+    ports:
+      - "5432:5432"  # 호스트와 컨테이너 간 포트 매핑

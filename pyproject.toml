@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "sqlalchemy-tutorial"
+version = "0.1.0"
+description = ""
+authors = ["craftsangjae <craftsangjae@gmail.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.29"}
+asyncpg = "^0.29.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+pytest-asyncio = "^0.23.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+asyncio_mode = "auto"
