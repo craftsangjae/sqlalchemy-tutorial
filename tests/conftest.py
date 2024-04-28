@@ -25,7 +25,10 @@ def launch_test_db(pytestconfig):
 
 @pytest.fixture(scope="session")
 async def build_table(launch_test_db):
-    engine = create_async_engine('postgresql+asyncpg://user:password@localhost:5432/testdb', echo=True)
+    engine = create_async_engine(
+        'postgresql+asyncpg://user:password@localhost:5432/testdb',
+        echo=True,
+    )
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
