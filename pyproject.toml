@@ -10,6 +10,9 @@ packages = [{include = "src"}]
 python = "^3.11"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.29"}
 asyncpg = "^0.29.0"
+fastapi = {extras = ["uvicorn"], version = "^0.110.2"}
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+pydantic-settings = "^2.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
