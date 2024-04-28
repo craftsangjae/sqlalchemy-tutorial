@@ -91,7 +91,7 @@ async def test_measure_elapsed_time_per_step_with_pool_recycle(test_engine):
         logging.info(f"(5) select query 날리는데 걸린 시간: {elapsed_time:.4f}초")
 
 
-async def test_measure_elapsed_time_per_step_over_connection_pool_size(test_engine):
+async def test_exceed_connection_pool(test_engine):
     """
     pool size가 넘어가면, 커넥션을 새로 맺지 않고 기다리게 됩니다.
     이 때, 기다리는 시간은 pool timeout으로 결정됩니다.
@@ -113,4 +113,28 @@ async def test_measure_elapsed_time_per_step_over_connection_pool_size(test_engi
 
     with pytest.raises(sqlalchemy.exc.TimeoutError):
         await test_engine.connect()
+
+
+async def test_set_statement_timeout(test_engine):
+    """
+    asyncpg의 command_timeout 옵션을 사용하여 statement timeout을 설정할 수 있습니다.
+    * https://magicstack.github.io/asyncpg/current/api/index.html
+
+    => 지나치게 오래걸리는 query로 인해 서비스가 장애나는 것을 방지하기 위함입니다.
+
+    :return:
+    """
+    # 1초 statement timeout을 설정합니다.
+    test_engine = create_async_engine(
+        'postgresql+asyncpg://user:password@localhost:5432/testdb',
+        echo=True,
+        connect_args={"server_settings": {"statement_timeout": "1000"}}
+    )
+
+    async with test_engine.connect() as conn:
+
+        with pytest.raises(sqlalchemy.exc.StatementError):
+            # 1초가 넘어가면 에러가 발생합니다.
+            await conn.execute(text("SELECT pg_sleep(1.1)"))
+
 
