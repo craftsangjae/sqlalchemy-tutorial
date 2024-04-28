@@ -24,6 +24,9 @@ class PostEntity(Base):
     def from_domain(post: Post):
         return PostEntity(id=post.id, user_id=post.user_id, title=post.title)
 
+    def to_domain(self) -> Post:
+        return Post(id=self.id, user_id=self.user_id, title=self.title)
+
 
 class UserEntity(Base):
     __tablename__ = 'users'
@@ -34,3 +37,6 @@ class UserEntity(Base):
     @staticmethod
     def from_domain(user: User):
         return UserEntity(id=user.id, name=user.name)
+
+    def to_domain(self) -> User:
+        return User(id=self.id, name=self.name, posts=[post.to_domain() for post in self.posts])

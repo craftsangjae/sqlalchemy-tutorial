@@ -18,6 +18,7 @@ pydantic-settings = "^2.2.1"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.0"
 pytest-asyncio = "^0.23.6"
+locust = "^2.26.0"
 
 [build-system]
 requires = ["poetry-core"]

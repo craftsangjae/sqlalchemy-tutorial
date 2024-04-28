@@ -1,15 +1,17 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 
 @dataclass
 class User:
     id: Optional[int]
     name: str
+    posts: List['Post']
 
     @staticmethod
     def new(name: str):
-        return User(id=None, name=name)
+        return User(id=None, name=name, posts=[])
+
 
 @dataclass
 class Post:

@@ -1,6 +1,9 @@
 import sys
+from typing import List
 
 from fastapi import FastAPI
+from sqlalchemy.orm import selectinload
+
 from src.database import Database
 from sqlalchemy import select
 
@@ -35,3 +38,12 @@ async def read_user(user_id:int):
         if user:
             return {"user_id": user.id, "name": user.name}
     return {"user_id": user_id}
+
+
+@app.get("/users")
+async def read_users():
+    async with database.session() as session:
+        stmt = select(UserEntity).options(selectinload(UserEntity.posts))
+        result = await session.execute(stmt)
+        user_entities: List[UserEntity] = result.scalars().all()
+        return [user.to_domain() for user in user_entities]
